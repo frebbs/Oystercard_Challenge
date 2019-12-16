@@ -61,7 +61,9 @@ describe OysterCard do
         expect(subject).to respond_to(:touch_out)
       end
       it "charges the customer the minimum set amount" do
-        expect {subject.touch_out}.to change{subject.balance}.by(10)
+        subject.top_up(20)
+        subject.touch_in
+        expect {subject.touch_out}.to change{subject.balance}.by(-OysterCard::MIN_JOURNEY_COST)
       end
     end
   end

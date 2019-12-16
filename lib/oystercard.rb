@@ -3,7 +3,7 @@ class OysterCard
 
   MIN_BALANCE = 1
   MAX_BALANCE = 90
-  MIN_JOURNEY_COST = 10
+  MIN_JOURNEY_COST = 1
   @in_journey =  nil
 
   def initialize(balance = 0)
@@ -25,11 +25,11 @@ class OysterCard
   end
 
   def touch_out
+    deduct(MIN_JOURNEY_COST)
     @in_journey = false
   end
 
   def in_journey?
     @in_journey
   end
-
 end
