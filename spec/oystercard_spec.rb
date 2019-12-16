@@ -43,9 +43,31 @@ describe OysterCard do
   end
 
   describe "#touch_in" do
-    context "it records the users start of the journy" do
-      it "It allows the user to start their journy" do
+    context "it records the users start of the journey" do
+      it "It allows the user to start their journey" do
         expect(subject).to respond_to(:touch_in)
+      end
+    end
+  end
+
+  describe "#touch_out" do
+    context "records the users end journey" do
+      it "ends the journey" do
+        expect(subject).to respond_to(:touch_out)
+      end
+    end
+  end
+
+  describe "#in_journey?" do
+    context "records the current state of travel" do
+      it "returns true if traveling" do
+        subject.touch_in
+        expect(subject.in_journey?).to be true
+      end
+
+      it "returns false if not traveling" do
+        subject.touch_out
+        expect(subject.in_journey?).to be false
       end
     end
   end
