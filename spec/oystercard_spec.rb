@@ -60,6 +60,9 @@ describe OysterCard do
       it "ends the journey" do
         expect(subject).to respond_to(:touch_out)
       end
+      it "charges the customer the minimum set amount" do
+        expect {subject.touch_out}.to change{subject.balance}.by(10)
+      end
     end
   end
 

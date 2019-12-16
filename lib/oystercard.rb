@@ -1,8 +1,9 @@
 class OysterCard
-  attr_reader :balance, :max_balance
+  attr_reader :balance
 
   MIN_BALANCE = 1
   MAX_BALANCE = 90
+  MIN_JOURNEY_COST = 10
   @in_journey =  nil
 
   def initialize(balance = 0)
