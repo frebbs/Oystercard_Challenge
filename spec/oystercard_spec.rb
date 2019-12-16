@@ -41,4 +41,12 @@ describe OysterCard do
       end
     end
   end
+
+  describe "#touch_in" do
+    context "it records the users start of the journy" do
+      it "It allows the user to start their journy" do
+        expect(subject).to respond_to(:touch_in)
+      end
+    end
+  end
 end
