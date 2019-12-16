@@ -8,7 +8,7 @@ class OysterCard
   end
 
   def top_up(balance)
-    raise "Error, cannot top up if balance greater then 90" if (balance + @balance) > MAX_BALANCE
+    raise "Error, cannot top up if balance greater then #{MAX_BALANCE}" if (balance + @balance) > MAX_BALANCE
     @balance += balance
   end
 end

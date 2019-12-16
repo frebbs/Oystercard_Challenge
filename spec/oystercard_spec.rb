@@ -28,7 +28,16 @@ describe OysterCard do
 
       it "returns an error balance > 90" do
         subject.top_up(90)
-        expect {subject.top_up(1)}.to raise_error "Error, cannot top up if balance greater then 90"
+        expect {subject.top_up(1)}.to raise_error "Error, cannot top up if balance greater then #{OysterCard::MAX_BALANCE}"
+      end
+    end
+  end
+
+  describe "#deduct" do
+    context "It deducts money from the oyster account" do
+      it "Reduces the balance by 10" do
+        subject.top_up(20)
+        expect(subject.deduct(20)).to eq(0)
       end
     end
   end
