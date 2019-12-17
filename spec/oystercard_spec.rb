@@ -1,12 +1,11 @@
 require './lib/oystercard'
 
 describe OysterCard do
-
   it "creates an instance of OysterCard" do
     expect(subject).to be_a OysterCard
   end
 
-  it "has a defult balance of 0" do
+  it "has a default balance of 0" do
     expect(subject.balance).to be(0)
   end
 
@@ -21,14 +20,14 @@ describe OysterCard do
         expect(subject.balance).to eq(10)
       end
 
-      it "has a default MAX balance" do
-        subject.top_up(90)
-        expect(subject.balance).to eq(90)
-      end
-
       it "returns an error balance > 90" do
         subject.top_up(90)
         expect {subject.top_up(1)}.to raise_error "Error, cannot top up if balance greater then #{OysterCard::MAX_BALANCE}"
+      end
+
+      it "has a default MAX balance" do
+        subject.top_up(90)
+        expect(subject.balance).to eq(90)
       end
     end
   end
@@ -50,7 +49,12 @@ describe OysterCard do
 
       it "requests the user topup if balance <= £1" do
         subject.top_up(0.5)
-        expect {subject.touch_in}.to raise_error "You need to top up"
+        expect {subject.touch_in("Bond")}.to raise_error "You need to top up"
+      end
+
+      it "records the users start station" do
+        subject.top_up(10)
+        expect {subject.touch_in("Bond")}.to change{subject.entry_station}.to("Bond")
       end
     end
   end
@@ -62,7 +66,7 @@ describe OysterCard do
       end
       it "charges the customer the minimum set amount" do
         subject.top_up(20)
-        subject.touch_in
+        subject.touch_in("Bond")
         expect {subject.touch_out}.to change{subject.balance}.by(-OysterCard::MIN_JOURNEY_COST)
       end
     end
@@ -72,13 +76,13 @@ describe OysterCard do
     context "records the current state of travel" do
       it "returns true if traveling" do
         subject.top_up(10)
-        subject.touch_in
-        expect(subject.in_journey?).to be true
+        subject.touch_in("Bond")
+        expect(subject.entry_station).to_not be nil
       end
 
       it "returns false if not traveling" do
         subject.touch_out
-        expect(subject.in_journey?).to be false
+        expect(subject.entry_station).to be nil
       end
     end
   end
