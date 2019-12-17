@@ -77,12 +77,12 @@ describe OysterCard do
       it "returns true if traveling" do
         subject.top_up(10)
         subject.touch_in("Bond")
-        expect(subject.entry_station).to_not be nil
+        expect(subject.in_journey?).to be true
       end
 
       it "returns false if not traveling" do
         subject.touch_out
-        expect(subject.entry_station).to be nil
+        expect(subject.in_journey?).to be false
       end
     end
   end
