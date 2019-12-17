@@ -69,6 +69,11 @@ describe OysterCard do
         subject.touch_in("Bond")
         expect {subject.touch_out}.to change{subject.balance}.by(-OysterCard::MIN_JOURNEY_COST)
       end
+      it "changes the station to nil" do
+        subject.top_up(10)
+        subject.touch_in("Bond")
+        expect {subject.touch_out}.to change{subject.entry_station}.from("Bond").to(nil)
+      end
     end
   end
 
